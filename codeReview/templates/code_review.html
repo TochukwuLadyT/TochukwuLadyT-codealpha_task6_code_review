@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Review</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script>
+    <style>
+        .CodeMirror {
+            border: 1px solid #ccc;
+            height: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <H2>Code</H2>
+        <textarea name="code" id="id_code" cols="80" rows="10">{{ form.code.value }}</textarea>
+        <br>
+    <input type="submit" value="Review">
+
+    {% if pylint_output %}
+    <h3>Review Output</h3>
+    <pre>{{ pylint_output }}</pre>
+    {% endif %}
+    </form>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("id_code"), {
+            lineNumbers: true,
+            mode: "python"
+        });
+    </script>
+</body>
+</html>
+
+
+
